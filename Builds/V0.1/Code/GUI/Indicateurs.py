@@ -106,14 +106,23 @@ class Indicateur(QMainWindow, Ui_MainWindow):
         #Delais de traitement:
         list_delais_intrum  = [(ele_ex[2], (ele_rec[4]-ele_ex[4])) for ele_ex in expedition_temperature for ele_rec in reception_temperature if ele_ex[2]in ele_rec[2]]
         list_delais = [(ele_rec[4]-ele_ex[4]).days for ele_ex in expedition_temperature for ele_rec in reception_temperature if ele_ex[2]in ele_rec[2]]
-        print(list_delais)
+
             #delais moyenne            
         delais_moyen = numpy.mean(numpy.array(list_delais), dtype =numpy.float)
         ecartype = numpy.std(numpy.array(list_delais), dtype =numpy.float, ddof = 1)
-#        reception_temperature.reverse()
-        print(delais_moyen)
-        print(ecartype)
-#        print(delais_moyen)
+        
+        
+        #Conformite : 
+        
+        recensement_conformite = self.db.recensement_conformite(date_debut, date_fin)
+        
+            #conforme
+        conforme = [ele for ele in recensement_conformite if ele[5] == "Conforme"]
+        nbr_instrum_conforme = len(conforme)
+            #Non Conforme
+        non_conforme = [ele for ele in recensement_conformite if ele[5] == "Non Conforme"]
+        nbr_instrum_non_conforme = len(non_conforme)
+        
         
     def supprimer_lignes(self):
         '''Supprime l'ensemble des lignes du qtablewidget'''

@@ -74,6 +74,22 @@ class AccesBdd():
 
         return intervention
         
+        
+    def recensement_conformite(self, date_debut, date_fin):
+        '''fct permettant de connaitre le nbr de non conforme'''
+        
+        result = self.connection.execute("""SELECT * FROM "CONFORMITE_TEMP_RESULTAT" WHERE "DATE_INTERVENTION" >= '{}' AND "DATE_INTERVENTION" <= '{}' ORDER BY "ID_INTERVENTION" """.format(date_debut, date_fin))
+        
+        conformite = []        
+        for ele in result:            
+            
+            conformite.append(ele) #mise en forme
+
+        return conformite
+        
+        
+        
+        
     def return_code_intrument(self, identification_instrument):
         '''retourne le code instrument'''
         result = self.connection.execute("""SELECT "CODE" FROM "INSTRUMENTS" WHERE "IDENTIFICATION" ='{}'""".format(identification_instrument))
