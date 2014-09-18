@@ -103,10 +103,11 @@ class Indicateur(QMainWindow, Ui_MainWindow):
         nbr_expedition_temperature = len(expedition_temperature)
         instruments_temp_expedies = [ele[2] for ele in expedition_temperature]
         
-        
+#        print("reception {}".format(reception_temperature))
         #Delais de traitement:
-#        delais  = [ele for ]
-        
+        list_delais  = [(ele_ex[2], (ele_rec[4]-ele_ex[4])) for ele_ex in expedition_temperature for ele_rec in reception_temperature if ele_ex[2]in ele_rec[2]]
+        reception_temperature.reverse()
+        print(delais)
         
     def supprimer_lignes(self):
         '''Supprime l'ensemble des lignes du qtablewidget'''
