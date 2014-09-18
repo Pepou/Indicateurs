@@ -10,7 +10,7 @@ from PyQt4.QtGui import QMainWindow
 from .Ui_Indicateurs import Ui_MainWindow
 from Package.AccesBdd import AccesBdd
 
-
+import numpy
 
 class Indicateur(QMainWindow, Ui_MainWindow):
     """
@@ -103,11 +103,16 @@ class Indicateur(QMainWindow, Ui_MainWindow):
         nbr_expedition_temperature = len(expedition_temperature)
         instruments_temp_expedies = [ele[2] for ele in expedition_temperature]
         
-#        print("reception {}".format(reception_temperature))
         #Delais de traitement:
-        list_delais  = [(ele_ex[2], (ele_rec[4]-ele_ex[4])) for ele_ex in expedition_temperature for ele_rec in reception_temperature if ele_ex[2]in ele_rec[2]]
-        reception_temperature.reverse()
-        print(list_delais)
+        list_delais_intrum  = [(ele_ex[2], (ele_rec[4]-ele_ex[4])) for ele_ex in expedition_temperature for ele_rec in reception_temperature if ele_ex[2]in ele_rec[2]]
+        list_delais = [(ele_rec[4]-ele_ex[4]).days for ele_ex in expedition_temperature for ele_rec in reception_temperature if ele_ex[2]in ele_rec[2]]
+            
+            #delais moyenne            
+        delais_moyen = numpy.mean(numpy.array(list_delais), dtype =numpy.float)
+        ecartype = numpy.std(numpy.array(list_delais), dtype =numpy.float)
+#        reception_temperature.reverse()
+        print(delais_moyen)
+#        print(delais_moyen)
         
     def supprimer_lignes(self):
         '''Supprime l'ensemble des lignes du qtablewidget'''
