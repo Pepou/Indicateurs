@@ -106,12 +106,13 @@ class Indicateur(QMainWindow, Ui_MainWindow):
         #Delais de traitement:
         list_delais_intrum  = [(ele_ex[2], (ele_rec[4]-ele_ex[4])) for ele_ex in expedition_temperature for ele_rec in reception_temperature if ele_ex[2]in ele_rec[2]]
         list_delais = [(ele_rec[4]-ele_ex[4]).days for ele_ex in expedition_temperature for ele_rec in reception_temperature if ele_ex[2]in ele_rec[2]]
-            
+        print(list_delais)
             #delais moyenne            
         delais_moyen = numpy.mean(numpy.array(list_delais), dtype =numpy.float)
-        ecartype = numpy.std(numpy.array(list_delais), dtype =numpy.float)
+        ecartype = numpy.std(numpy.array(list_delais), dtype =numpy.float, ddof = 1)
 #        reception_temperature.reverse()
         print(delais_moyen)
+        print(ecartype)
 #        print(delais_moyen)
         
     def supprimer_lignes(self):
