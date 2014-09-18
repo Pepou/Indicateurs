@@ -86,10 +86,13 @@ class Indicateur(QMainWindow, Ui_MainWindow):
         parc_temperature = [ele for ele in self.instruments if ele[1] == "Température"]
         identification_instruments_temperature = [ele[0] for ele in parc_temperature]
         
+        indicateurs_temperature = {}
         
         #nbr_etalonnage_temp:
         etalonnage = self.db.resencement_etalonnage_temp(date_debut, date_fin)
         nbr_etalonnage_temp = len(etalonnage)
+        
+        indicateurs_temperature["nombre etalonnages"] = nbr_etalonnage_temp
         
         #nbr reception
         reception = [ele for ele in self.db.recensement_intervention(date_debut, date_fin) if ele[3] == "Réception"]
@@ -97,11 +100,15 @@ class Indicateur(QMainWindow, Ui_MainWindow):
         nbr_reception_temperature = len(reception_temperature)
         instruments_temp_receptionnes = [ele[2] for ele in reception_temperature]
         
+        indicateurs_temperature["nbr d'instruments receptionnés"] = nbr_reception_temperature
+        
         #nbr expedition
         expedition = [ele for ele in self.db.recensement_intervention(date_debut, date_fin) if ele[3] == "Expedition"]
         expedition_temperature = [ele for ele in expedition if ele[2] in identification_instruments_temperature]
         nbr_expedition_temperature = len(expedition_temperature)
         instruments_temp_expedies = [ele[2] for ele in expedition_temperature]
+        
+        indicateurs_temperature["nbr d'instruments expédiés"] = nbr_expedition_temperature
         
         #Delais de traitement:
         list_delais_intrum  = [(ele_ex[2], (ele_rec[4]-ele_ex[4])) for ele_ex in expedition_temperature for ele_rec in reception_temperature if ele_ex[2]in ele_rec[2]]
@@ -111,18 +118,33 @@ class Indicateur(QMainWindow, Ui_MainWindow):
         delais_moyen = numpy.mean(numpy.array(list_delais), dtype =numpy.float)
         ecartype = numpy.std(numpy.array(list_delais), dtype =numpy.float, ddof = 1)
         
+        indicateurs_temperature["delais moyen de traitement"] = delais_moyen
+        indicateurs_temperature["ecart type delais moyen de traitement"] = ecartype
         
-        #Conformite : 
-        
+        #Conformite :         
         recensement_conformite = self.db.recensement_conformite(date_debut, date_fin)
+        nbr_declaration_conformite = len(recensement_conformite)
         
-            #conforme
+        indicateurs_temperature["nbr de CV"] = nbr_declaration_conformite
+        
+            #Conforme
         conforme = [ele for ele in recensement_conformite if ele[5] == "Conforme"]
         nbr_instrum_conforme = len(conforme)
+        
+        indicateurs_temperature["nbr d'instruments conforme"] = nbr_instrum_conforme
+        
             #Non Conforme
         non_conforme = [ele for ele in recensement_conformite if ele[5] == "Non Conforme"]
         nbr_instrum_non_conforme = len(non_conforme)
         
+        indicateurs_temperature["nbr d'instruments non conforme"] = nbr_instrum_non_conforme
+        
+        
+        #Presentation tableWidget final
+#        self.tableWidget.insertRow(0)          
+#                  
+#        self.tableWidget.setItem((ele[0]), 0, QtGui.QTableWidgetItem(str(ele[1])))
+#        
         
     def supprimer_lignes(self):
         '''Supprime l'ensemble des lignes du qtablewidget'''
