@@ -78,7 +78,7 @@ class AccesBdd():
     def recensement_conformite(self, date_debut, date_fin):
         '''fct permettant de connaitre le nbr de non conforme'''
         
-        result = self.connection.execute("""SELECT * FROM "CONFORMITE_TEMP_RESULTAT" WHERE "DATE_ETAL" >= '{}' AND "DATE_ETAL" <= '{}' ORDER BY "ID_INTERVENTION" """.format(date_debut, date_fin))
+        result = self.connection.execute("""SELECT * FROM "CONFORMITE_TEMP_RESULTAT" WHERE "DATE_ETAL" >= '{}' AND "DATE_ETAL" <= '{}' ORDER BY "ID_CONFORMITE" """.format(date_debut, date_fin))
         
         conformite = []        
         for ele in result:            

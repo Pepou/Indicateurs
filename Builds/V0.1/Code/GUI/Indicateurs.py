@@ -117,27 +117,27 @@ class Indicateur(QMainWindow, Ui_MainWindow):
             #delais moyenne            
         delais_moyen = numpy.mean(numpy.array(list_delais), dtype =numpy.float)
         ecartype = numpy.std(numpy.array(list_delais), dtype =numpy.float, ddof = 1)
-        print("delais moyen {} ecart {}".format(delais_moyen, ecartype))
+        
         indicateurs_temperature["delais moyen de traitement"] = delais_moyen
         indicateurs_temperature["ecart type delais moyen de traitement"] = ecartype
         
 #        #Conformite :         
-#        recensement_conformite = self.db.recensement_conformite(date_debut, date_fin)
-#        nbr_declaration_conformite = len(recensement_conformite)
-#        
-#        indicateurs_temperature["nbr de CV"] = nbr_declaration_conformite
-#        
-#            #Conforme
-#        conforme = [ele for ele in recensement_conformite if ele[5] == "Conforme"]
-#        nbr_instrum_conforme = len(conforme)
-#        
-#        indicateurs_temperature["nbr d'instruments conforme"] = nbr_instrum_conforme
-#        
-#            #Non Conforme
-#        non_conforme = [ele for ele in recensement_conformite if ele[5] == "Non Conforme"]
-#        nbr_instrum_non_conforme = len(non_conforme)
-#        
-#        indicateurs_temperature["nbr d'instruments non conforme"] = nbr_instrum_non_conforme
+        recensement_conformite = self.db.recensement_conformite(date_debut, date_fin)
+        nbr_declaration_conformite = len(recensement_conformite)
+        print("nbr decla conf {}".format(nbr_declaration_conformite))
+        indicateurs_temperature["nbr de CV"] = nbr_declaration_conformite
+        
+            #Conforme
+        conforme = [ele for ele in recensement_conformite if ele[5] == "Conforme"]
+        nbr_instrum_conforme = len(conforme)
+        print("nbr inrtu c {}".format(nbr_instrum_conforme))
+        indicateurs_temperature["nbr d'instruments conforme"] = nbr_instrum_conforme
+        
+            #Non Conforme
+        non_conforme = [ele for ele in recensement_conformite if ele[5] == "Non Conforme"]
+        nbr_instrum_non_conforme = len(non_conforme)
+        print("nbr_instrum nc {}".format(nbr_instrum_non_conforme))
+        indicateurs_temperature["nbr d'instruments non conforme"] = nbr_instrum_non_conforme
 #        
         
         #Presentation tableWidget final
