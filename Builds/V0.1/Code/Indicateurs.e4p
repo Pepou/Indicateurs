@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric5 project file for project Indicateurs -->
-<!-- Saved: 2014-09-11, 16:29:20 -->
+<!-- Saved: 2014-09-19, 16:47:54 -->
 <!-- Copyright (C) 2014 F.Cariou, f.cariou@laposte.net -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -22,6 +22,7 @@
     <Source>GUI/Ui_Indicateurs.py</Source>
     <Source>GUI/Indicateurs.py</Source>
     <Source>GUI/Ui_connexion2.py</Source>
+    <Source>GUI/__init__.py</Source>
   </Sources>
   <Forms>
     <Form>GUI/connexion2.ui</Form>
@@ -49,4 +50,69 @@
     <FiletypeAssociation pattern="*.ui" type="FORMS"/>
     <FiletypeAssociation pattern="*.ui.h" type="FORMS"/>
   </FiletypeAssociations>
+  <Packagers>
+    <PackagersParams>
+      <dict>
+        <key>
+          <string>CXFREEZE</string>
+        </key>
+        <value>
+          <dict>
+            <key>
+              <string>additionalFiles</string>
+            </key>
+            <value>
+              <list>
+                <string>C:\Python33\Lib\site-packages\psycopg2</string>
+              </list>
+            </value>
+            <key>
+              <string>applicationIcon</string>
+            </key>
+            <value>
+              <string></string>
+            </value>
+            <key>
+              <string>baseName</string>
+            </key>
+            <value>
+              <string>Win32GUI</string>
+            </value>
+            <key>
+              <string>includeModules</string>
+            </key>
+            <value>
+              <list>
+                <string>sqlalchemy.databases</string>
+              </list>
+            </value>
+            <key>
+              <string>initScript</string>
+            </key>
+            <value>
+              <string>Console3</string>
+            </value>
+            <key>
+              <string>script</string>
+            </key>
+            <value>
+              <string>C:\Python33\Scripts\cxfreeze.bat</string>
+            </value>
+            <key>
+              <string>targetDirectory</string>
+            </key>
+            <value>
+              <string>C:\Travail\EFS\Travail accreditation\SQ\Developpement Informatique\Package\Indicateurs V0.1</string>
+            </value>
+            <key>
+              <string>targetName</string>
+            </key>
+            <value>
+              <string>Indicateurs V0.1.exe</string>
+            </value>
+          </dict>
+        </value>
+      </dict>
+    </PackagersParams>
+  </Packagers>
 </Project>
