@@ -26,9 +26,12 @@ class Indicateur(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.db = AccesBdd(login, password)
         self.instruments = self.db.resencement_instrument_utilises()
-#        self.interventions = self.db.recensement_intervention()
 
-
+        
+        #configuration largeur colonnes tablewidget
+        self.tableWidget.setColumnWidth(0,600)
+        self.tableWidget.setColumnWidth(1,600)
+        
     @pyqtSlot(str)
     def on_comboBox_activated(self, p0):
         """
@@ -124,27 +127,56 @@ class Indicateur(QMainWindow, Ui_MainWindow):
 #        #Conformite :         
         recensement_conformite = self.db.recensement_conformite(date_debut, date_fin)
         nbr_declaration_conformite = len(recensement_conformite)
-        print("nbr decla conf {}".format(nbr_declaration_conformite))
+        
         indicateurs_temperature["nbr de CV"] = nbr_declaration_conformite
         
             #Conforme
         conforme = [ele for ele in recensement_conformite if ele[5] == "Conforme"]
         nbr_instrum_conforme = len(conforme)
-        print("nbr inrtu c {}".format(nbr_instrum_conforme))
+        
         indicateurs_temperature["nbr d'instruments conforme"] = nbr_instrum_conforme
         
             #Non Conforme
         non_conforme = [ele for ele in recensement_conformite if ele[5] == "Non Conforme"]
         nbr_instrum_non_conforme = len(non_conforme)
-        print("nbr_instrum nc {}".format(nbr_instrum_non_conforme))
+        
         indicateurs_temperature["nbr d'instruments non conforme"] = nbr_instrum_non_conforme
 #        
         
         #Presentation tableWidget final
-#        self.tableWidget.insertRow(0)          
-#                  
-#        self.tableWidget.setItem((ele[0]), 0, QtGui.QTableWidgetItem(str(ele[1])))
-#        
+        
+        self.tableWidget.insertRow(0)                 
+        self.tableWidget.setItem(0, 0, QtGui.QTableWidgetItem(str("Nombre d'etalonnages")))
+        self.tableWidget.setItem(0, 1, QtGui.QTableWidgetItem(str(indicateurs_temperature["nombre etalonnages"])))
+        
+        self.tableWidget.insertRow(1)                 
+        self.tableWidget.setItem(1, 0, QtGui.QTableWidgetItem(str("nbr d'instruments receptionnés")))
+        self.tableWidget.setItem(1, 1, QtGui.QTableWidgetItem(str(indicateurs_temperature["nbr d'instruments receptionnés"])))
+        
+        self.tableWidget.insertRow(2)                 
+        self.tableWidget.setItem(2, 0, QtGui.QTableWidgetItem(str("nbr d'instruments expédiés")))
+        self.tableWidget.setItem(2, 1, QtGui.QTableWidgetItem(str(indicateurs_temperature["nbr d'instruments expédiés"])))
+        
+        self.tableWidget.insertRow(3)                 
+        self.tableWidget.setItem(3, 0, QtGui.QTableWidgetItem(str("Delais moyen d'etalonnage")))
+        self.tableWidget.setItem(3, 1, QtGui.QTableWidgetItem(str(indicateurs_temperature["delais moyen de traitement"])))
+        
+        self.tableWidget.insertRow(4)                 
+        self.tableWidget.setItem(4, 0, QtGui.QTableWidgetItem(str("Ecart moyen entre les etalonnage (ecart type)")))
+        self.tableWidget.setItem(4, 1, QtGui.QTableWidgetItem(str(indicateurs_temperature["ecart type delais moyen de traitement"])))
+        
+        self.tableWidget.insertRow(5)                 
+        self.tableWidget.setItem(5, 0, QtGui.QTableWidgetItem(str("Nbr de declaration de conformite")))
+        self.tableWidget.setItem(5, 1, QtGui.QTableWidgetItem(str(indicateurs_temperature["nbr de CV"])))
+        
+        self.tableWidget.insertRow(6)                 
+        self.tableWidget.setItem(6, 0, QtGui.QTableWidgetItem(str("Nbr d'instruments conformes")))
+        self.tableWidget.setItem(6, 1, QtGui.QTableWidgetItem(str(indicateurs_temperature["nbr d'instruments conforme"])))
+        
+        self.tableWidget.insertRow(7)                 
+        self.tableWidget.setItem(7, 0, QtGui.QTableWidgetItem(str("Nbr d'instruments non conformes")))
+        self.tableWidget.setItem(7, 1, QtGui.QTableWidgetItem(str(indicateurs_temperature["nbr d'instruments non conforme"])))
+        
         
     def supprimer_lignes(self):
         '''Supprime l'ensemble des lignes du qtablewidget'''
